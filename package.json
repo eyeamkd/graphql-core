@@ -15,9 +15,11 @@
     "@graphql-tools/load": "^7.3.2",
     "@prisma/client": "^3.2.1",
     "apollo-server": "^3.4.0",
+    "bcryptjs": "^2.4.3",
     "fs": "0.0.1-security",
     "graphql": "^15.6.1",
     "graphql-tools": "^8.2.0",
+    "jsonwebtoken": "^8.5.1",
     "path": "^0.12.7"
   },
   "devDependencies": {

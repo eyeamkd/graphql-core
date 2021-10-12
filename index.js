@@ -3,6 +3,7 @@ const { PrismaClient } = require("@prisma/client");
 const { resolvers, links } = require("./schema/index");
 const path = require("path");
 const fs = require("fs");
+const { getUserId } = require("./utils");
 
 const prisma = new PrismaClient();
 
@@ -12,10 +13,12 @@ const server = new ApolloServer({
     "utf8"
   ),
   resolvers,
-  //context object is just a passon object, that multiple resolvers can read and write to
-  context: {
+  //context object is just a passing  object, that multiple resolvers can read and write to
+  context: ({ req }) => ({
+    ...req, //attaching request object so that it is available to the resolvers to access the data inside it, for example the request headers
     prisma,
-  },
+    userId: req && req.headers.authorization ? getUserId(req) : null,
+  }),
 });
 
 server.listen().then(({ url }) => console.log("Server listening at ", url));

@@ -1,15 +1,31 @@
 type Query {
-  info: String!
+  info: String!,
   feed: [Link!]
 }
 
 type Mutation {
   newLink(url: String!, description: String!): Link!,
   deleteLink(id:String!, url:String!):String,
-  updateLink(id:String!,url:String!,description:String!):String
+  updateLink(id:String!,url:String!,description:String!):String,
+  signin(name:String!,email:String!, password:String!):AuthPayload, 
+  login(email:String!, password:String!):AuthPayload
 }
 type Link {
-  url: String!
-  id: ID!
-  description: String!
+  url: String!,
+  id: ID!,
+  description: String!,
+  postedBy:User!
+} 
+
+type User{
+  id: ID!,
+  name:String!,
+  password:String!,
+  email:String!,
+  links:[Link]  
+} 
+
+type AuthPayload{ 
+  token:String,
+  user:User
 }
