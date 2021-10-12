@@ -8,18 +8,22 @@ let links = [
 ];
 
 const resolvers = {
-  Query: {
-    info: () => null,
-    //used to resolve the feed query that was placed
-    feed: () => links,
-  }, 
-  Mutation:{
-      newPost:(parent,context)=>({
-          id,
-          url:context.url,
-          description:context.description
-      })
-  }
-};
+    Query: {
+      info: () => "GraphQL query for the HackerNews API",
+      //used to resolve the feed query that was placed
+      feed: () => links,
+    },
+    Mutation: {
+      newPost: (parent, arguments) => { 
+        let link = { 
+        id:`link-${links.length++}-${Date.now()}`,
+        url: arguments.url,
+        description: arguments.description,
+        } 
+        links.push(link); 
+        return link;
+      },
+    },
+  };
 
-module.exports = { resolvers };
+module.exports = { resolvers,links };
