@@ -37,7 +37,7 @@ const resolvers = {
         return `Link ${result.id} successfully updated`
       },
       deleteLink:(parent, arguments)=>{
-        let newLinks = links.filter(link=> link.id==arguments.id) 
+        let newLinks = links.filter(link=> link.id!=arguments.id) 
         links = newLinks;
         return `Link ${arguments.id} successfully deleted`
       }
