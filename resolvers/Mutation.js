@@ -1,6 +1,8 @@
 const bcrypt = require("bcryptjs");
 const jwt = require('jsonwebtoken'); 
-const {getTokenPayload, getUserId,APP_SECRET} = require('../utils')
+const {getTokenPayload, getUserId,APP_SECRET} = require('../utils'); 
+
+
 
 async function signup(parent, arguments, context, info) {
     const password = await bcrypt.hash(arguments.password, 10); 
@@ -44,13 +46,15 @@ async function login(parent, arguments, context, info) {
 async function newLink(parent, args, context, info) {
     const { userId } = context;
     console.log("User id is",userId);
-    return await context.prisma.link.create({
+    const newLink =  await context.prisma.link.create({
       data: {
         url: args.url,
         description: args.description,
         postedBy: { connect: { id: userId } },
       }
-    })
+    }) 
+    context.pubsub.publish("NEW_LINK",newLink); 
+    return newLink;
   }
 
 module.exports = {login,newLink,signup}

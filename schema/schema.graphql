@@ -29,4 +29,8 @@ type User{
 type AuthPayload{ 
   token:String,
   user:User
+} 
+
+type Subscription{ 
+  newLinkSub:Link!
 }
