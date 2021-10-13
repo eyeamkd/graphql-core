@@ -3,9 +3,12 @@ const { PrismaClient } = require("@prisma/client");
 const { resolvers, links } = require("./schema/index");
 const path = require("path");
 const fs = require("fs");
-const { getUserId } = require("./utils");
+const { getUserId } = require("./utils"); 
 
-const prisma = new PrismaClient();
+
+const prisma = new PrismaClient(); 
+
+console.log("Prisma client is", prisma);
 
 const server = new ApolloServer({
   typeDefs: fs.readFileSync(

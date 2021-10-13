@@ -7,14 +7,15 @@ type Mutation {
   newLink(url: String!, description: String!): Link!,
   deleteLink(id:String!, url:String!):String,
   updateLink(id:String!,url:String!,description:String!):String,
-  signin(name:String!,email:String!, password:String!):AuthPayload, 
+  signup(name:String!,email:String!, password:String!):AuthPayload, 
   login(email:String!, password:String!):AuthPayload
-}
+} 
+
 type Link {
   url: String!,
   id: ID!,
   description: String!,
-  postedBy:User!
+  postedBy:User!  
 } 
 
 type User{
