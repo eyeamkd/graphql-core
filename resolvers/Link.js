@@ -1,6 +1,8 @@
-async function postedBy(){  
+const prisma = require('../utils/prisma'); 
+
+async function postedBy(parent){  
     console.log("Inside posted by",arguments);
-    return  await context.prisma.link.findUnique({where:{id:parent.id}}).postedBy()
+    return  prisma.link.findUnique({where:{id:parent.id}}).postedBy()
 } 
 
 

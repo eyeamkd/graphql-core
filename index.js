@@ -4,7 +4,8 @@ const {  links } = require("./schema/index");
 const path = require("path");
 const fs = require("fs");
 const { getUserId } = require("./utils");
-const pubsub = require("./utils/pubsub");
+const pubsub = require("./utils/pubsub"); 
+const prisma = require('./utils/prisma');
 const { createServer } = require("http");
 const { execute, subscribe } = require("graphql");
 const { SubscriptionServer } = require("subscriptions-transport-ws");
@@ -17,7 +18,6 @@ const express = require("express");
 const http = require("http");
 const app = express();
 
-const prisma = new PrismaClient();
 const httpServer = http.createServer(app);  
 let resolvers = { 
   Query,
