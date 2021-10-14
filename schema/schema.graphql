@@ -1,6 +1,12 @@
+""" 
+before the feed query was just a normal one which was used to
+get all the data, now by introducing the filter string we can apply a resolver function 
+that would get only the selected data which has the "filtered" text in it 
+"""
+
 type Query {
   info: String!
-  feed: [Link!]
+  feed(filter:String): [Link!] 
 }
 
 type Mutation {
