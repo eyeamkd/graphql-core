@@ -1,36 +1,48 @@
 const { ApolloServer } = require("apollo-server-express");
 const { PrismaClient } = require("@prisma/client");
-const {  links } = require("./schema/index");
+const { links } = require("./schema/index");
 const path = require("path");
 const fs = require("fs");
 const { getUserId } = require("./utils");
-const pubsub = require("./utils/pubsub"); 
-const prisma = require('./utils/prisma');
+const pubsub = require("./utils/pubsub");
+const prisma = require("./utils/prisma");
 const { createServer } = require("http");
 const { execute, subscribe } = require("graphql");
 const { SubscriptionServer } = require("subscriptions-transport-ws");
-const { makeExecutableSchema } = require("@graphql-tools/schema"); 
+const { makeExecutableSchema } = require("@graphql-tools/schema");
 const Query = require("./resolvers/Query");
 const Mutation = require("./resolvers/Mutation");
 const User = require("./resolvers/User");
-const Link = require("./resolvers/Link");
+const Link = require("./resolvers/Link"); 
+const Vote = require('./resolvers/vote');
 const express = require("express");
 const http = require("http");
 const app = express();
 
-const httpServer = http.createServer(app);  
-let resolvers = { 
+const httpServer = http.createServer(app);
+let resolvers = {
   Query,
   Mutation,
   User,
-  Link,  
-  Subscription:{  
-    newLinkSubscription:{ 
-        subscribe:() =>{ console.log("Inside fun"); return pubsub.asyncIterator(["NEW_LINK"])},
-        resolve:payload=> { console.log("Payload is", payload); return payload}
-    }
-}
-}
+  Link,
+  Vote,
+  Subscription: {
+    newLinkSubscription: {
+      subscribe: () => {
+        console.log("Inside fun");
+        return pubsub.asyncIterator(["NEW_LINK"]);
+      },
+      resolve: (payload) => {
+        console.log("Payload is", payload);
+        return payload;
+      },
+  },
+    newVoteSubscription: {
+      subscribe: () => pubsub.asyncIterator("NEW_VOTE"),
+      resolve: (payload) => payload,
+    },
+  },
+};
 const schema = makeExecutableSchema({
   typeDefs: fs.readFileSync(
     path.join(__dirname, "./schema/schema.graphql"),
@@ -47,7 +59,7 @@ const subscriptionServer = SubscriptionServer.create(
   },
   {
     server: httpServer,
-    path:'/graphql',
+    path: "/graphql",
   }
 );
 
@@ -74,7 +86,7 @@ const server = new ApolloServer({
       },
     },
   ],
-}); 
+});
 
 console.log("Server created", server.context.pubsub);
 

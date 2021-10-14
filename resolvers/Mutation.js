@@ -1,6 +1,7 @@
 const bcrypt = require("bcryptjs");
 const jwt = require('jsonwebtoken');  
-const pubsub = require('../utils/pubsub');
+const pubsub = require('../utils/pubsub'); 
+const prisma = require('../utils/prisma');
 const {getTokenPayload, getUserId,APP_SECRET} = require('../utils'); 
 
 
@@ -56,9 +57,37 @@ async function newLink(parent, args, context, info) {
     }) 
     pubsub.publish("NEW_LINK",newLink); 
     return newLink;
+  } 
+
+  async function vote(parent, args, context, info){ 
+      const {userId} = context; 
+        console.log("here",prisma.vote)
+      const checkVote = await prisma.vote.findUnique({
+          where:{
+              linkId_userId:{
+                  linkId: Number(args.linkId),
+                  userId:userId
+              }
+          }
+      }) 
+
+      if(Boolean(checkVote)){ 
+          throw new Error('Already voted for this link with the Id',args.linkId); 
+      } 
+
+      const vote = await prisma.vote.create({
+          data:{
+              user:{connect:{id:userId}},
+              link:{connect:{id:Number(args.linkId)}}
+          }
+      })
+
+      pubsub.publish("NEW_VOTE",vote); 
+      return vote;
+ 
   }
 
-module.exports = {login,newLink,signup}
+module.exports = {login,newLink,signup,vote}
 
 
 
