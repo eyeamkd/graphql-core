@@ -6,7 +6,7 @@ that would get only the selected data which has the "filtered" text in it
 
 type Query {
   info: String!
-  feed(filter:String): [Link!] 
+  feed(filter:String, skip:Int, take:Int, orderBy: LinkOrderByInput): Feed! 
 }
 
 type Mutation {
@@ -16,6 +16,22 @@ type Mutation {
   signup(name: String!, email: String!, password: String!): AuthPayload
   login(email: String!, password: String!): AuthPayload
   vote(linkId: ID!): Vote
+} 
+
+type Feed{ 
+  links:[Link!]!,
+  count:Int!
+}
+
+input LinkOrderByInput{ 
+  description:Sort,
+  url:Sort,
+  createdAt:Sort
+} 
+
+enum Sort{ 
+  asc
+  desc
 }
 
 type Subscription {
