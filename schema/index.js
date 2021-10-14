@@ -1,18 +1,23 @@
-const { gql } = require("apollo-server-core"); 
-const Query = require('../resolvers/Query')
-const Mutation = require('../resolvers/Mutation')
-const User = require('../resolvers/User')
-const Link = require('../resolvers/Link') 
-const newLinkSub = require('../subscriptions/NewLinkSub')
+const { gql } = require("apollo-server-core");
+const Query = require("../resolvers/Query");
+const Mutation = require("../resolvers/Mutation");
+const User = require("../resolvers/User");
+const Link = require("../resolvers/Link");
+const Subscription = require("../subscriptions/newLinkSubscription");
+
+//always export resolvers as the root type and not the child types
 
 const resolvers = {
-  Query, Mutation, User, Link, newLinkSub
-}
+  Query,
+  Mutation,
+  User,
+  Link, 
+};
 
 // const resolvers = {
 //   Query: {
 //     info: () => "GraphQL query for the HackerNews API",
-//     //used to resolve the feed query that was placed
+//     used to resolve the feed query that was placed
 //     feed: async (parent, arguments, context) => context.prisma.link.findMany(),
 //   },
 //   Mutation: {
@@ -22,7 +27,7 @@ const resolvers = {
 //           url: arguments.url,
 //           description: arguments.description,
 //         }
-//       }); 
+//       });
 //       return newLink;
 //     },
 
