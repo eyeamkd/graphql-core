@@ -86,11 +86,13 @@ const server = new ApolloServer({
       },
     },
   ],
-});
+});  
 
-console.log("Server created", server.context.pubsub);
+app.get('/',(req,res)=>{ 
+  res.redirect('/graphql');
+})
 
 server.start().then(() => {
   server.applyMiddleware({ app });
-  httpServer.listen(4000, () => console.log("Server listening .."));
+  httpServer.listen(4000, () => console.log("Server listening at http://localhost:4000"));
 });
