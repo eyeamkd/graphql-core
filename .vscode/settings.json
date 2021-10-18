@@ -1,6 +1,7 @@
 {
     "editor.fontFamily": "Fira Code, Menlo, Monaco, 'Courier New', monospace",
     "editor.fontLigatures": true,
-    "editor.fontWeight": "400"
-
+    "editor.fontWeight": "400",
+    "appService.defaultWebAppToDeploy": "/subscriptions/dd614807-8e56-4778-82b3-4e3476ceca64/resourceGroups/TechnologyInnovation_Sandbox/providers/Microsoft.Web/sites/graphql-core",
+    "appService.deploySubpath": ".",
 }

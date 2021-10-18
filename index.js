@@ -94,5 +94,5 @@ app.get('/',(req,res)=>{
 
 server.start().then(() => {
   server.applyMiddleware({ app });
-  httpServer.listen(4000, () => console.log("Server listening at http://localhost:4000"));
+  httpServer.listen(process.env.PORT || 4000, () => console.log("Server listening at http://localhost:4000"));
 });
