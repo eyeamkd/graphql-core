@@ -6,8 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1", 
     "start": "node index.js",
-    "prisma":"npx prisma generate && npm run db-init", 
-    "db-init":"npx prisma db pull && npx prisma db push"
+    "prisma":"npx prisma generate && npx prisma migrate dev --name init"
   },
   "keywords": [],
   "author": "",
