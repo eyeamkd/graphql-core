@@ -6,11 +6,12 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1", 
     "start": "nodemon index.js",
-    "prisma":"npx prisma db push"
+    "prisma-init":"npx prisma generate && npm run db-init", 
+    "db-init":"npx prisma db pull && npx prisma db push"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "IC",
   "dependencies": {
     "@graphql-tools/graphql-file-loader": "^7.3.0",
     "@graphql-tools/load": "^7.3.2",
@@ -27,7 +28,8 @@
     "graphql-tools": "^8.2.0",
     "jsonwebtoken": "^8.5.1",
     "path": "^0.12.7",
-    "subscriptions-transport-ws": "^0.9.19"
+    "subscriptions-transport-ws": "^0.9.19",
+    "prisma": "^3.2.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.13",
