@@ -5,7 +5,7 @@ const User = require("../resolvers/User");
 const Link = require("../resolvers/Link");
 const Subscription = require("../subscriptions/newLinkSubscription");
 
-//always export resolvers as the root type and not the child types
+
 
 const resolvers = {
   Query,
